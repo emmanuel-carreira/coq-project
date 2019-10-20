@@ -34,11 +34,11 @@ Fixpoint verificaCoPrimos (n1 n2: nat) : bool :=
              end
   end.
 
-Fixpoint makeNatList (n: nat): list nat :=
+Fixpoint criaListaNumerica (n: nat): list nat :=
   match n with
   | O => nil
   | 1 => nil
-  | S n' => S n' :: makeNatList n' 
+  | S n' => S n' :: criaListaNumerica n' 
   end.
 
 (*Fixpoint verificaListaCoPrimos (n : nat) (l : list nat) :  bool :=
@@ -54,7 +54,7 @@ Fixpoint is_prime (n: nat) : bool :=
   match n with
   | O => false
   | 1 => false
-  | _ => verificaListaCoPrimos n (makeNatList (sqrt n))
+  | _ => verificaListaCoPrimos n (criaListaNumerica (sqrt n))
   end.*)
 
 
@@ -86,9 +86,9 @@ Fixpoint verificaPrimo (n: nat) : bool :=
   match n with
   | O => false
   | 1 => false
-  | _ => fold_bool  (verificaListaCoPrimos n (makeNatList (sqrt n)))
+  | _ => fold_bool  (verificaListaCoPrimos n (criaListaNumerica (sqrt n)))
   end.
 
 Fixpoint totiente (n : nat)  : nat :=
-  length ( filter_bool (verificaListaCoPrimos n (makeNatList n)) true). 
+  length ( filter_bool (verificaListaCoPrimos n (criaListaNumerica n)) true). 
 
