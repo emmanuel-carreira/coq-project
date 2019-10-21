@@ -23,48 +23,21 @@ End ListNotations.
 Import ListNotations.
 
 Fixpoint verificaCoPrimos (n1 n2: nat) : bool :=
-  match n1 , n2 with
-  | 0 , _ => false
-  | 1 , _ => false
-  | _ , 0 => false
-  | _ , 1 => false
-  | _ , _ => match gcd n1 n2 with
-             | 1 => true
-             | _ => false
-             end
-  end.
+   match gcd n1 n2 with
+     | 1 => true
+     | _ => false
+     end.
 
-Fixpoint criaListaNumerica (n: nat): list nat :=
+Fixpoint criaListaNumericaSemZero (n: nat): list nat :=
   match n with
   | O => nil
-  | 1 => nil
-  | S n' => S n' :: criaListaNumerica n' 
+  | S n' => S n' :: criaListaNumericaSemZero n' 
   end.
-
-(*Fixpoint verificaListaCoPrimos (n : nat) (l : list nat) :  bool :=
-  match l with
-  | nil => true
-  | h :: t => match verificaCoPrimos n h  with
-              | false => false
-              | true => verificaListaCoPrimos n t
-              end
-  end.
- 
-Fixpoint is_prime (n: nat) : bool :=
-  match n with
-  | O => false
-  | 1 => false
-  | _ => verificaListaCoPrimos n (criaListaNumerica (sqrt n))
-  end.*)
-
 
 Fixpoint verificaListaCoPrimos (n : nat) (l : list nat) : list bool :=
   match l with
   | nil => nil
-  | h :: t =>  match n =? h with
-               | true => true :: verificaListaCoPrimos n t
-               | false => verificaCoPrimos n h ::  verificaListaCoPrimos n t
-               end
+  | h :: t =>  verificaCoPrimos n h ::  verificaListaCoPrimos n t
   end.
 
 Fixpoint fold_bool (l:list bool) : bool :=
@@ -86,9 +59,27 @@ Fixpoint verificaPrimo (n: nat) : bool :=
   match n with
   | O => false
   | 1 => false
-  | _ => fold_bool  (verificaListaCoPrimos n (criaListaNumerica (sqrt n)))
+  | _ => fold_bool  (verificaListaCoPrimos n (criaListaNumericaSemZero (sqrt n)))
   end.
 
 Fixpoint totiente (n : nat)  : nat :=
-  length ( filter_bool (verificaListaCoPrimos n (criaListaNumerica n)) true). 
+  length ( filter_bool (verificaListaCoPrimos n (criaListaNumericaSemZero (n - 1))) true). 
+
+Check (3,4).
+
+Fixpoint determinaE (n index : nat) : nat := 
+  match  index with
+  | O => O
+  | 1 => O
+  | S n' => match verificaCoPrimos n (S n') with
+            | true => S n'
+            | false => determinaE n n'
+            end
+   end.
+
+
+Fixpoint constroiChavePublica (n : nat) : nat*nat :=
+  (n,determinaE (totiente n) (sqrt n)).
+
+
 
