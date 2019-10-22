@@ -21,6 +21,7 @@ Notation "[ x ; y ; .. ; z ]" := (cons x (cons y .. (cons z nil) ..)) : list_sco
 End ListNotations.
 
 Import ListNotations.
+Import ZArith.
 
 Fixpoint verificaCoPrimos (n1 n2: nat) : bool :=
    match gcd n1 n2 with
@@ -81,5 +82,14 @@ Fixpoint determinaE (n index : nat) : nat :=
 Fixpoint constroiChavePublica (n : nat) : nat*nat :=
   (n,determinaE (totiente n) (sqrt n)).
 
+Inductive divide : nat -> nat -> Prop.
 
+Fixpoint fatorial (n : nat) : nat.
 
+Fixpoint potencia (x n : nat) : nat.
+
+Fixpoint primo (x : nat) : bool.
+
+Definition divisao (n m q r : nat) : Prop := r < m /\ n = q * m + r.
+
+Inductive congruente : nat -> nat -> Prop.
