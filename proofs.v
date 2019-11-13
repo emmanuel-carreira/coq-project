@@ -7,6 +7,10 @@ Autores: Emmanuel Carreira Alves
 
 Require Exports definitions.
 
+Check primo 2 1.
+Check primo 13 12.
+Check primo 4 3.
+
 Lemma divide_simetria: forall x : nat, divide x x.
 
 Lemma divide_antisimetria: forall x y : nat, divides x y -> divides y x -> x = y.
