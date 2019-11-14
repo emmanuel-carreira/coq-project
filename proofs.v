@@ -28,3 +28,5 @@ Lemma potencia_mult: forall x n m : nat, power x n * power x m = power x (n + m)
 Lemma potencia_de_potencia: forall x n m : nat, power (power x n) m = power x (n * m).
 
 Theorem divide_congruencia : forall x : nat, divide n x -> congruent 0 x.
+
+(*Theorem existeInversoModular: forall e t: nat, gcd e t = 1 ->
