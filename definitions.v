@@ -21,6 +21,8 @@ Notation "[ x ; y ; .. ; z ]" := (cons x (cons y .. (cons z nil) ..)) : list_sco
 End ListNotations.
 
 Import ListNotations.
+Require Export ZArith_base.
+
 
 Fixpoint verificaCoPrimos (n1 n2: nat) : bool :=
    match gcd n1 n2 with
@@ -65,7 +67,6 @@ Fixpoint verificaPrimo (n: nat) : bool :=
 Fixpoint totiente (n : nat)  : nat :=
   length ( filter_bool (verificaListaCoPrimos n (criaListaNumericaSemZero (n - 1))) true). 
 
-Check (3,4).
 
 Fixpoint determinaE (n index : nat) : nat := 
   match  index with
@@ -78,8 +79,38 @@ Fixpoint determinaE (n index : nat) : nat :=
    end.
 
 
-Fixpoint constroiChavePublica (n : nat) : nat*nat :=
+Definition constroiChavePublica (n : nat) : nat*nat :=
   (n,determinaE (totiente n) (sqrt n)).
 
+(*Inductive divide : nat -> nat -> Prop :=
+  divide : forall x y q : nat, y = x * q -> divide x y.*)
+
+
+(*
+x é o número a ter sua primalidade verificada
+y é o número da iteração corrente
+Na chamada da função, y deve ser o antecessor de x
+
+Fixpoint primo (x y : nat) : bool :=
+  match x, y with
+  | 0, _ => false
+  | 1, _ => false
+  | S x', 0 => false
+  | S x', 1 => true
+  | S x', S y' => if divide y x
+                  then false
+                  else primo x y'
+  end.
+*)
+Definition divisao (n m q r : nat) : Prop := r < m /\ n = q * m + r.
+
+(*Inductive congruente : nat -> nat -> Prop.*)
+
+Definition encriptaNumero (m n e: nat): nat :=
+  (m ^ e) mod n.
+
+
+Definition decriptaNumero (c n d: nat): nat :=
+  (c ^ d) mod n.
 
 
