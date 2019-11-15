@@ -83,12 +83,21 @@ Fixpoint constroiChavePublica (n : nat) : nat*nat :=
   (n,determinaE (totiente n) (sqrt n)).
 
 Inductive divide : nat -> nat -> Prop :=
-  divide : forall x y q : nat, y = x * q -> divide x y.
+  divideDef : forall x y q : nat, y = x * q -> divide x y.
 
-Fixpoint fatorial (n : nat) : nat.
+Fixpoint fatorial (n : nat) : nat :=
+  match n with
+  | 0 => 1
+  | 1 => 1
+  | S n' => n * (fatorial n')
+  end.
 
-Fixpoint potencia (x n : nat) : nat.
-
+Fixpoint potencia (x n : nat) : nat :=
+  match n with
+  | 0 => 1
+  | 1 => x
+  | S n' => x * (potencia x n')
+  end.
 (*
 x é o número a ter sua primalidade verificada
 y é o número da iteração corrente
@@ -107,4 +116,5 @@ Fixpoint primo (x y : nat) : bool :=
 
 Definition divisao (n m q r : nat) : Prop := r < m /\ n = q * m + r.
 
-Inductive congruente : nat -> nat -> Prop.
+Inductive congruente : nat -> nat -> Prop :=
+  congruenteDef: forall x y n m k : nat, x + n * k = y + m * k -> congruente x y.
