@@ -81,9 +81,13 @@ Fixpoint determinaE (n index : nat) : nat :=
 
 Definition constroiChavePublica (n : nat) : nat*nat :=
   (n,determinaE (totiente n) (sqrt n)).
+  
 
-(*Inductive divide : nat -> nat -> Prop :=
-  divide : forall x y q : nat, y = x * q -> divide x y.*)
+Fixpoint divide (n1 n2: nat) : bool :=
+  match n2 mod n1 with
+  | O => true
+  | S n => false
+  end.
 
 
 (*
@@ -114,3 +118,4 @@ Definition decriptaNumero (c n d: nat): nat :=
   (c ^ d) mod n.
 
 
+´´ 
