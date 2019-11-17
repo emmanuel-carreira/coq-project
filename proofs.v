@@ -8,6 +8,19 @@ Autores: Emmanuel Carreira Alves
 
 Require Export definitions.
 
+Require Import Notations Logic Datatypes.
+Require Import Logic.
+Require Import Coq.Init.Nat.
+Local Open Scope nat_scope.
+Require Setoid.
+Require Import PeanoNat Le Gt Minus Bool Lt.
+Require Import NZAxioms NZMulOrder Bool NAxioms NSub NParity NZPow.
+Require Import ZArith_base.
+Require Import ZArithRing.
+Require Import Zcomplements.
+Require Import Zdiv.
+Require Import Wf_nat.
+Require Import Omega.
 
 
 (*Lemma divide_simetria: forall x : nat, divide x x.
@@ -17,6 +30,8 @@ Lemma divide_antisimetria: forall x y : nat, divides x y -> divides y x -> x = y
 Lemma nao_primo_0 : ~ primo 0.
 
 Lemma nao_primo_1 : ~ primo 1.*)
+
+Axiom totientePrimo : forall x : nat, verificaPrimo x = true -> totiente x = x -1.
 
 Theorem divide_soma: forall x y z : nat, divide x y -> divide x z -> divide x (y + z) .
 Proof.
@@ -108,12 +123,12 @@ Proof.
   - simpl. rewrite <- IHn'. intuition.
 Qed. 
 
-Lemma potencia_mult_2: forall x n m : nat,  (x ^ n) =  x *( x ^( n -1)).
+Lemma pow_0_n: forall n :nat, n > 0 -> 0 ^ n = 0.
 Proof.
-  intros.  induction n.
-  - intuition. simpl. rewrite <- potencia_mult. simpl. 
-  - simpl. rewrite <- IHn'. intuition.
-Qed. 
+intros n. induction n.
+  - intuition.
+  - intuition.
+Qed.
 
 
 Lemma potencia_de_potencia: forall x n m : nat, (x ^ n) ^ m =  x ^ (n * m).
@@ -123,8 +138,7 @@ Proof.
   - simpl. rewrite -> aXaton. rewrite -> n_plus_mXn. rewrite -> mult_comm.
     induction m.
     + rewrite -> mult_comm. rewrite -> pow_n_0. rewrite -> mult_plus_distr_l. simpl. reflexivity.
-    + 
-    
+    +simpl. rewrite <- mult_comm. intuition. rewrite <- mult_plus_distr_l.
 Theorem  totienteNumeroPrimo: forall x : nat, verificaPrimo x = true-> totiente x = x - 1.
 Proof.
 intros. unfold totiente. destruct verificaCoPrimos.
