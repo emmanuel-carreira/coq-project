@@ -21,7 +21,14 @@ Notation "[ x ; y ; .. ; z ]" := (cons x (cons y .. (cons z nil) ..)) : list_sco
 End ListNotations.
 
 Import ListNotations.
-Import ZArith.
+Require Import NZAxioms NZMulOrder Bool NAxioms NSub NParity NZPow.
+Require Import ZArith_base.
+Require Import ZArithRing.
+Require Import Zcomplements.
+Require Import Zdiv.
+Require Import Wf_nat.
+Require Import Omega.
+
 
 Fixpoint verificaCoPrimos (n1 n2: nat) : bool :=
    match gcd n1 n2 with
@@ -66,7 +73,6 @@ Fixpoint verificaPrimo (n: nat) : bool :=
 Fixpoint totiente (n : nat)  : nat :=
   length ( filter_bool (verificaListaCoPrimos n (criaListaNumericaSemZero (n - 1))) true). 
 
-Check (3,4).
 
 Fixpoint determinaE (n index : nat) : nat := 
   match  index with
@@ -79,30 +85,22 @@ Fixpoint determinaE (n index : nat) : nat :=
    end.
 
 
-Fixpoint constroiChavePublica (n : nat) : nat*nat :=
+Definition constroiChavePublica (n : nat) : nat*nat :=
   (n,determinaE (totiente n) (sqrt n)).
+  
 
-Inductive divide : nat -> nat -> Prop :=
-  divideDef : forall x y q : nat, y = x * q -> divide x y.
-
-Fixpoint fatorial (n : nat) : nat :=
-  match n with
-  | 0 => 1
-  | 1 => 1
-  | S n' => n * (fatorial n')
+Fixpoint divide (a b: nat) : Prop :=
+  match b mod a with
+  | O => True
+  | S n => False
   end.
 
-Fixpoint potencia (x n : nat) : nat :=
-  match n with
-  | 0 => 1
-  | 1 => x
-  | S n' => x * (potencia x n')
-  end.
+
 (*
 x é o número a ter sua primalidade verificada
 y é o número da iteração corrente
 Na chamada da função, y deve ser o antecessor de x
-*)
+
 Fixpoint primo (x y : nat) : bool :=
   match x, y with
   | 0, _ => false
@@ -113,8 +111,15 @@ Fixpoint primo (x y : nat) : bool :=
                   then false
                   else primo x y'
   end.
-
+*)
 Definition divisao (n m q r : nat) : Prop := r < m /\ n = q * m + r.
 
-Inductive congruente : nat -> nat -> Prop :=
-  congruenteDef: forall x y n m k : nat, x + n * k = y + m * k -> congruente x y.
+(*Inductive congruente : nat -> nat -> Prop.*)
+
+Definition encriptaNumero (m n e: nat): nat :=
+  (m ^ e) mod n.
+
+
+Definition decriptaNumero (c n d: nat): nat :=
+  (c ^ d) mod n.
+
