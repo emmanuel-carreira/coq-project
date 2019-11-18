@@ -106,3 +106,8 @@ Definition encriptaNumero (m n e: nat): nat :=
 Definition decriptaNumero (c n d: nat): nat :=
   (c ^ d) mod n.
 
+
+Definition divide x y := exists z, y=z*x.
+
+
+Notation "( x | y )" := (divide x y) (at level 0) : nat_scope.
