@@ -87,7 +87,7 @@ Fixpoint determinaE (n index : nat) : nat :=
 
 Definition constroiChavePublica (n : nat) : nat*nat :=
   (n,determinaE (totiente n) (sqrt n)).
-  
+
 
 Fixpoint divide (a b: nat) : Prop :=
   b mod a = 0.
@@ -95,22 +95,6 @@ Fixpoint divide (a b: nat) : Prop :=
 
 Compute divide 5 10.
 
-(*
-x é o número a ter sua primalidade verificada
-y é o número da iteração corrente
-Na chamada da função, y deve ser o antecessor de x
-
-Fixpoint primo (x y : nat) : bool :=
-  match x, y with
-  | 0, _ => false
-  | 1, _ => false
-  | S x', 0 => false
-  | S x', 1 => true
-  | S x', S y' => if divide y x
-                  then false
-                  else primo x y'
-  end.
-*)
 Definition divisao (n m q r : nat) : Prop := r < m /\ n = q * m + r.
 
 (*Inductive congruente : nat -> nat -> Prop.*)
