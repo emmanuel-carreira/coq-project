@@ -90,11 +90,10 @@ Definition constroiChavePublica (n : nat) : nat*nat :=
   
 
 Fixpoint divide (a b: nat) : Prop :=
-  match b mod a with
-  | O => True
-  | S n => False
-  end.
+  b mod a = 0.
 
+
+Compute divide 5 10.
 
 (*
 x é o número a ter sua primalidade verificada
