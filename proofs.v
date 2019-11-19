@@ -13,7 +13,7 @@ Require Import Logic.
 Require Import Coq.Init.Nat.
 Local Open Scope nat_scope.
 Require Setoid.
-Require Import PeanoNat Le Gt Minus Bool Lt.
+Require Import PeanoNat Le Gt Minus Bool Lt Euclid.
 Require Import NZAxioms NZMulOrder Bool NAxioms NSub NParity NZPow.
 Require Import Wf_nat.
 Require Import Omega.
@@ -62,10 +62,7 @@ Axiom pow_n_1: forall n: nat, n ^ 1 = n.
 Axiom Euler_exp_totient: forall a n :nat , verificaCoPrimos a n = true -> a ^ totiente n  = 1 mod n.
 
 
-Theorem euclides: forall a b c m : nat, divide c (m * a) -> divide c (m * b)-> divide c (m * gcd a b).
-Proof.
-intros.
-Admitted.
+(*Theorem euclides: forall a b c m : nat, divide c (m * a) -> divide c (m * b)-> divide c (m * gcd a b).*)
 
 
 Theorem pow_1_l: forall n : nat, 1 ^ n = 1.
