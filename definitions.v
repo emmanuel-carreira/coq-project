@@ -89,11 +89,11 @@ Definition constroiChavePublica (n : nat) : nat*nat :=
   (n,determinaE (totiente n) (sqrt n)).
 
 
-Fixpoint divide (a b: nat) : Prop :=
-  b mod a = 0.
+Definition divide (a b: nat) : Prop := b mod a = 0.
 
 
 Compute divide 5 10.
+
 
 Definition divisao (n m q r : nat) : Prop := r < m /\ n = q * m + r.
 
@@ -107,7 +107,7 @@ Definition decriptaNumero (c n d: nat): nat :=
   (c ^ d) mod n.
 
 
-Definition divide x y := exists z, y=z*x.
+Definition divide_exists x y := exists z, y=z*x.
 
 
 Notation "( x | y )" := (divide x y) (at level 0) : nat_scope.
