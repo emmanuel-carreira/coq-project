@@ -221,11 +221,13 @@ Notation "( x | y )" := (divide x y) (at level 0) : nat_scope.
 
 Axiom exists_multiple: forall a b: nat, a mod b = 0 <> exists c, a = b*c.
 
-Axiom exists_multiple2: forall a b: nat, divide b a -> 0 = a mod b.
+Axiom exists_multiple2: forall a b: nat, a mod b = 0 -> divide b a.
 
 
 Theorem cifraDecifra: forall m c e d p q n a b, e > 1 -> d > 1 -> a = e*d -> b = totiente n-> n = p*q -> 1 = e*d mod (totiente n) -> a >1-> c = encriptaNumero m n e -> m < n -> decriptaNumero c n d = m.
 Proof.
 intros. unfold decriptaNumero. rewrite -> H6. unfold encriptaNumero. rewrite -> pot_pot. rewrite -> aux2. rewrite <- H1. rewrite <- potencia_mult.  
-  - rewrite -> mod_dist.  rewrite <- H1 in H4. rewrite -> pow_n_1.  rewrite -> mult_comm. rewrite -> mod__. apply dividePred2 in H4. rewrite <- H2 in H4. rewrite <- exists_multiple2 in H4. 
+  - rewrite -> mod_dist.  rewrite <- H1 in H4. rewrite -> pow_n_1.  rewrite -> mult_comm. rewrite -> mod__. apply dividePred2 in H4. rewrite <- H2 in H4.
+  apply exists_multiple2 in H4. unfold divide in H4.
+  destruct H4 as [z]. rewrite H4.
      
