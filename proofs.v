@@ -269,9 +269,21 @@ intros.
 Admitted.
 
 (*
-Teorema principal
+Teorema principal: provar que decriptar a mensagem cifrada c, utilizando a chave
+privada (n, d), resulta na mensagem original m
+
+p, q: dois números primos
+n, e: formam a chave pública
+n, d: formam a chave privada
+m: mensagem original
+c: mensagem cifrada
 *)
-Theorem cifraDecifra: forall m c e d p q n a b, p > m -> q > m -> p > 1 -> q > 1 -> e > 1 -> d > 1 -> a = e*d -> b = totiente n -> n = p*q -> 1 = e*d mod (totiente n) -> a > 1 -> c = encriptaNumero m n e -> m < n -> verificaPrimo p = true -> verificaPrimo q = true -> decriptaNumero c n d = m.
+Theorem cifraDecifra: 
+  forall m c e d p q n a b,
+  p > m -> q > m -> p > 1 -> q > 1 -> e > 1 -> d > 1 -> a = e*d ->
+  b = totiente n -> n = p*q -> 1 = e*d mod (totiente n) -> a > 1 ->
+  c = encriptaNumero m n e -> m < n -> verificaPrimo p = true ->
+  verificaPrimo q = true -> decriptaNumero c n d = m.
 Proof.
 intros. unfold decriptaNumero. rewrite -> H10. unfold encriptaNumero.
 rewrite -> pot_pot. rewrite -> aux2.
