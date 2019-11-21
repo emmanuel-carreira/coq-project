@@ -271,15 +271,61 @@ Admitted.
 (*
 Teorema principal
 *)
-Theorem cifraDecifra: forall m c e d p q n a b, p > m -> q > m ->  p > 1 -> q > 1 -> e > 1 -> d > 1 -> a = e*d -> b = totiente n-> n = p*q -> 1 = e*d mod (totiente n) -> a >1-> c = encriptaNumero m n e -> m < n -> verificaPrimo p = true -> verificaPrimo q = true ->decriptaNumero c n d = m.
+Theorem cifraDecifra: forall m c e d p q n a b, p > m -> q > m -> p > 1 -> q > 1 -> e > 1 -> d > 1 -> a = e*d -> b = totiente n -> n = p*q -> 1 = e*d mod (totiente n) -> a > 1 -> c = encriptaNumero m n e -> m < n -> verificaPrimo p = true -> verificaPrimo q = true -> decriptaNumero c n d = m.
 Proof.
-intros. unfold decriptaNumero. rewrite -> H10. unfold encriptaNumero. rewrite -> pot_pot. rewrite -> aux2. rewrite <- H5. rewrite <- potencia_mult.  
-  - rewrite -> mod_dist.  rewrite <- H5 in H8. rewrite -> pow_n_1.  rewrite -> mult_comm.  rewrite -> mod__.  apply dividePred2 in H8. rewrite <- H6 in H8.
-  apply exists_multiple2 in H8. unfold divide in H8.
-  destruct H8 as [z]. rewrite H8. rewrite -> mult_comm. rewrite <- pot_pot2.  rewrite -> pot_pot_3. rewrite -> Zpower_mod. rewrite -> H6. rewrite -> Euler_exp_totient. rewrite -> one_mod_m. rewrite one_mod_m. rewrite -> pow_1_l. rewrite -> one_mod_m. intuition. rewrite -> H7. apply mult_gt_one. apply H1. apply H2.  rewrite -> H7. apply mult_gt_one. apply H1. apply H2. rewrite -> H7. apply mult_gt_one. apply H1. apply H2. rewrite -> H7. apply coPrimo_com_produto. apply coPrimo_com_primo. apply H. apply H12. apply coPrimo_com_primo. apply H0. apply  H13. rewrite -> H7. intuition. rewrite -> H6. rewrite -> H7. rewrite -> totienteMult.  apply mult_gt_0. split.
-    +  rewrite totientePrimo. intuition. apply H12.
-    + rewrite totientePrimo. intuition. apply H13.
-    + apply H11.
+intros. unfold decriptaNumero. rewrite -> H10. unfold encriptaNumero.
+rewrite -> pot_pot. rewrite -> aux2.
+  - rewrite <- H5. rewrite <- potencia_mult.
+    * rewrite -> mod_dist.  rewrite <- H5 in H8. rewrite -> pow_n_1. 
+      rewrite -> mult_comm.  rewrite -> mod__.
+        + apply dividePred2 in H8. rewrite <- H6 in H8. apply exists_multiple2 in H8.
+          unfold divide in H8. destruct H8 as [z]. rewrite H8. rewrite -> mult_comm.
+          rewrite <- pot_pot2.  rewrite -> pot_pot_3.
+          { rewrite -> Zpower_mod.
+            { rewrite -> H6. rewrite -> Euler_exp_totient.
+              { rewrite -> one_mod_m.
+                { rewrite one_mod_m.
+                  { rewrite -> pow_1_l. rewrite -> one_mod_m.
+                    { intuition. }
+                    { rewrite -> H7. apply mult_gt_one.
+                      { apply H1. }
+                      { apply H2. }
+                    }
+                  }
+                  { rewrite -> H7. apply mult_gt_one.
+                    { apply H1. }
+                    { apply H2. }
+                  }
+                }
+                { rewrite -> H7. apply mult_gt_one.
+                  { apply H1. }
+                  { apply H2. }
+                }
+              }
+              { rewrite -> H7. apply coPrimo_com_produto.
+                { apply coPrimo_com_primo.
+                  { apply H. }
+                  { apply H12. }
+                }
+                { apply coPrimo_com_primo.
+                  { apply H0. }
+                  { apply  H13. }
+                }
+              }
+            }
+            { rewrite -> H7. intuition. }
+          }
+          { rewrite -> H6. rewrite -> H7. rewrite -> totienteMult.  apply mult_gt_0. split.
+            { rewrite totientePrimo.
+              { intuition. }
+              { apply H12. }
+            }
+            { rewrite totientePrimo.
+              { intuition. }
+              { apply H13. }
+            }
+          }
+        + apply H11.
   - apply H3.
   - apply H4.
 Qed.
