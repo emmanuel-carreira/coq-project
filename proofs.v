@@ -25,67 +25,82 @@ Module Nat
  <: OrderedTypeFull
  <: TotalOrder.
 
+(* 
+Teoremas e Lemmas necessários para construir a prova mas que fugiram um pouco
+do escopo do projeto
+*)
 Lemma totientePrimo : forall x : nat, verificaPrimo x = true -> totiente x = x -1.
-Proof.
-Admitted.
+Proof. Admitted.
 
 Lemma totienteMult : forall x y: nat, totiente (x*y) = (totiente x) * (totiente y).
-Proof.
-Admitted.
+Proof. Admitted.
 
 Lemma mod0eqdiv: forall x y: nat, y mod x = 0-> divide x y.
-Proof.
-Admitted.
+Proof. Admitted.
 
 Lemma dividePred: forall x y: nat, (y -1 ) mod x =0 -> 1 = y mod x.
-Proof.
-Admitted.
+Proof. Admitted.
 
 Lemma dividePred2: forall x y: nat, 1 = y mod x -> (y -1 ) mod x =0.
-Proof.
-Admitted.
+Proof. Admitted.
 
 Lemma swapMod: forall x y: nat, y > 1 ->1 =  y mod x  -> y = 1 mod x.
-Proof.
-Admitted.
+Proof. Admitted.
 
 Lemma pot_pot: forall  m e n d : nat , (m ^ e mod n) ^ d mod n = (m ^(e * d)) mod n.
-Proof.
-Admitted.
+Proof. Admitted.
 
 Lemma pot_pot2: forall m e d: nat, (m ^ e) ^ d = m ^ (e*d).
-Proof.
-Admitted.
+Proof. Admitted.
 
 Lemma o_mod_n: forall n : nat,  0 mod n = 0.
-Proof.
-Admitted.
+Proof. Admitted.
 
 Lemma mod_dist: forall a b c : nat, a*b mod c = (a mod c) * (b mod c).
-Proof.
-Admitted.
+Proof. Admitted.
 
 Lemma mod__: forall a b  : nat, a < b -> a mod b = a.
-Proof.
-Admitted.
+Proof. Admitted.
 
 Lemma one_mod_m: forall m : nat, m > 1-> 1 mod m = 1.
-Proof.
-Admitted.
+Proof. Admitted.
 
 Lemma pow_n_1: forall n: nat, n ^ 1 = n.
-Proof.
-Admitted.
+Proof. Admitted.
 
 Lemma Euler_exp_totient: forall a n :nat , verificaCoPrimos a n = true -> a ^ totiente n  = 1 mod n.
-Proof.
-Admitted.
+Proof. Admitted.
 
 Theorem euclides: forall a b c m : nat, divide c (m * a) -> divide c (m * b)-> divide c (m * gcd a b).
-Proof.
-intros.
-Admitted.
+Proof. Admitted.
 
+Lemma exists_multiple: forall a b: nat, a mod b = 0 <> exists c, a = b*c.
+Proof. Admitted.
+
+Lemma exists_multiple2: forall a b: nat, a mod b = 0 -> divide b a.
+Proof. Admitted.
+
+Lemma Zpower_mod: forall n p q : nat, 0 < n -> (p^q) mod n = ((p mod n)^q) mod n.
+Proof. Admitted.
+
+Lemma pot_pot_3: forall n p q : nat, 0 < n -> (p^q) ^ n = (p^n) ^q.
+Proof. Admitted.
+
+Lemma coPrimo_com_primo: forall m p: nat, p > m -> verificaPrimo p = true -> verificaCoPrimos m p = true.
+Proof. Admitted.
+
+Lemma coPrimo_com_produto: forall m p q: nat, verificaCoPrimos m p = true -> verificaCoPrimos m q = true -> verificaCoPrimos m (p*q) = true.
+Proof. Admitted.
+
+Lemma mult_gt_0: forall p q: nat, p >0 /\ q > 0 -> 0 < p * q.
+Proof. Admitted.
+
+Lemma mod_1_l: forall a, 1<a -> 1 mod a = 1.
+Proof. Admitted.
+
+(* 
+Teoremas e Lemmas que foram provados
+*)
 Theorem pow_1_l: forall n : nat, 1 ^ n = 1.
 Proof.
   intros.
@@ -97,7 +112,7 @@ Qed.
 Theorem pow_n_0: forall n : nat, n ^ 0 = 1.
 Proof.
   intros. intuition.
- Qed.
+Qed.
 
 Theorem aXaton: forall n a: nat, a *(a ^ n) = a  ^ (n + 1).
 Proof.
@@ -148,6 +163,7 @@ Proof.
   rewrite mult_plus_distr_r.
   elim H; auto with arith.
 Qed.
+
 Lemma mult_comm : forall n m, n * m = m * n.
 Proof.
 intros; elim n; intros; simpl in |- *; auto with arith.
@@ -179,31 +195,6 @@ Proof.
   - simpl. rewrite <- IHn'. intuition.
 Qed.
 
-Theorem divide_soma: forall x y z : nat, divide x y -> divide x z -> divide x (y + z) .
-Proof.
-  intros x y z.
-  simpl. intros H. intros H2. simpl. induction y as [O |  n].
-  - simpl. apply H2. 
-  - simpl. induction z.
-    + simpl. rewrite -> add_commutative. simpl. apply H.
-    + simpl.
-Admitted.
-
-Lemma mod_1_l: forall a, 1<a -> 1 mod a = 1.
-Proof.
-intros. simpl. Admitted.
-
-
-Lemma potencia_de_potencia: forall x n m : nat, (x ^ n) ^ m =  x ^ (n * m).
-Proof.
-  intros. simpl. induction n as [O | n'].
-  - simpl. rewrite -> pow_1_l. reflexivity.
-  - simpl. rewrite -> aXaton. rewrite -> n_plus_mXn. rewrite -> mult_comm.
-    induction m.
-    + rewrite -> mult_comm. rewrite -> pow_n_0. rewrite -> mult_plus_distr_l. simpl. reflexivity.
-    +simpl. rewrite <- mult_comm. intuition.
-Admitted.
-
 Theorem  totienteN: forall p q : nat, verificaPrimo p = true /\ verificaPrimo q = true-> totiente (p*q) =  (p - 1)*(q - 1).
 Proof.
 intros. rewrite -> totienteMult. inversion H. apply totientePrimo in H0.
@@ -233,39 +224,12 @@ intros.  rewrite <- aux.  reflexivity. induction p.
   - simpl. exfalso. intuition.
   - inversion H.  
     + intuition.
-    + unfold mult. intuition.  
-
+    + unfold mult. intuition.
 Qed.
 
-
-Theorem mod_dist2: forall a b c : nat, a*b mod c = (a mod c) * (b mod c).
-Proof.
-intros.
-  induction a.
-  - simpl. rewrite -> o_mod_n. simpl. reflexivity.
-  - simpl. induction b.
-    + simpl. rewrite -> o_mod_n. rewrite -> oXn. rewrite -> o_mod_n. rewrite -> oXn. reflexivity.
-    + unfold mult.  intuition. Admitted. 
-
-Definition divide x y := exists z, y=z*x.
-Notation "( x | y )" := (divide x y) (at level 0) : nat_scope.
-
-Lemma exists_multiple: forall a b: nat, a mod b = 0 <> exists c, a = b*c.
-Proof.
-Admitted.
-
-Lemma exists_multiple2: forall a b: nat, a mod b = 0 -> divide b a.
-Proof.
-Admitted.
-
-Lemma Zpower_mod p q n : forall n p q : nat, 0 < n -> (p^q) mod n = ((p mod n)^q) mod n.
-Proof.
-Admitted.
-
-Lemma pot_pot_3: forall n p q : nat, 0 < n -> (p^q) ^ n = (p^n) ^q.
-Proof.
-Admitted.
-
+(*
+Teoremas e Lemmas com provas incompletas
+*)
 Lemma mult_gt_one: forall m n: nat, m > 1 -> n > 1 -> m*n > 1.
 Proof. intros. unfold mult. 
 induction m.
@@ -274,14 +238,39 @@ induction m.
     + intuition.
 Admitted.
 
-Lemma coPrimo_com_primo: forall m p: nat, p > m -> verificaPrimo p = true -> verificaCoPrimos m p = true.
-Proof. Admitted.
+Theorem divide_soma: forall x y z : nat, divide x y -> divide x z -> divide x (y + z) .
+Proof.
+  intros x y z.
+  simpl. intros H. intros H2. simpl. induction y as [O |  n].
+  - simpl. apply H2. 
+  - simpl. induction z.
+    + simpl. rewrite -> add_commutative. simpl. apply H.
+    + simpl.
+Admitted.
 
-Lemma coPrimo_com_produto: forall m p q: nat, verificaCoPrimos m p = true -> verificaCoPrimos m q = true -> verificaCoPrimos m (p*q) = true.
-Proof. Admitted.
+Lemma potencia_de_potencia: forall x n m : nat, (x ^ n) ^ m =  x ^ (n * m).
+Proof.
+  intros. simpl. induction n as [O | n'].
+  - simpl. rewrite -> pow_1_l. reflexivity.
+  - simpl. rewrite -> aXaton. rewrite -> n_plus_mXn. rewrite -> mult_comm.
+    induction m.
+    + rewrite -> mult_comm. rewrite -> pow_n_0. rewrite -> mult_plus_distr_l. simpl. reflexivity.
+    +simpl. rewrite <- mult_comm. intuition.
+Admitted.
 
-Lemma mult_gt_0: forall p q: nat, p >0 /\ q >0  -> 0 < p * q.
-Proof. Admitted.
+Theorem mod_dist2: forall a b c : nat, a*b mod c = (a mod c) * (b mod c).
+Proof.
+intros.
+  induction a.
+  - simpl. rewrite -> o_mod_n. simpl. reflexivity.
+  - simpl. induction b.
+    + simpl. rewrite -> o_mod_n. rewrite -> oXn. rewrite -> o_mod_n. rewrite -> oXn. reflexivity.
+    + unfold mult.  intuition.
+Admitted.
+
+(*
+Teorema principal
+*)
 Theorem cifraDecifra: forall m c e d p q n a b, p > m -> q > m ->  p > 1 -> q > 1 -> e > 1 -> d > 1 -> a = e*d -> b = totiente n-> n = p*q -> 1 = e*d mod (totiente n) -> a >1-> c = encriptaNumero m n e -> m < n -> verificaPrimo p = true -> verificaPrimo q = true ->decriptaNumero c n d = m.
 Proof.
 intros. unfold decriptaNumero. rewrite -> H10. unfold encriptaNumero. rewrite -> pot_pot. rewrite -> aux2. rewrite <- H5. rewrite <- potencia_mult.  
@@ -294,4 +283,3 @@ intros. unfold decriptaNumero. rewrite -> H10. unfold encriptaNumero. rewrite ->
   - apply H3.
   - apply H4.
 Qed.
-     
