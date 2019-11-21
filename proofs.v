@@ -47,11 +47,15 @@ Axiom swapMod: forall x y: nat, y > 1 ->1 =  y mod x  -> y = 1 mod x.
 
 Axiom pot_pot: forall  m e n d : nat , (m ^ e mod n) ^ d mod n = (m ^(e * d)) mod n.
 
+Axiom pot_pot2: forall m e d: nat, (m ^ e) ^ d = m ^ (e*d).
+
 Axiom o_mod_n: forall n : nat,  0 mod n = 0.
 
 Axiom mod_dist: forall a b c : nat, a*b mod c = (a mod c) * (b mod c).
 
 Axiom mod__: forall a b  : nat, a < b -> a mod b = a.
+
+Axiom one_mod_m: forall m : nat, m > 1-> 1 mod m = 1.
 
 Axiom pow_n_1: forall n: nat, n ^ 1 = n.
 
@@ -223,11 +227,22 @@ Axiom exists_multiple: forall a b: nat, a mod b = 0 <> exists c, a = b*c.
 
 Axiom exists_multiple2: forall a b: nat, a mod b = 0 -> divide b a.
 
+Axiom Zpower_mod p q n : forall n p q : nat, 0 < n -> (p^q) mod n = ((p mod n)^q) mod n.
 
-Theorem cifraDecifra: forall m c e d p q n a b, e > 1 -> d > 1 -> a = e*d -> b = totiente n-> n = p*q -> 1 = e*d mod (totiente n) -> a >1-> c = encriptaNumero m n e -> m < n -> decriptaNumero c n d = m.
+Axiom pot_pot_3: forall n p q : nat, 0 < n -> (p^q) ^ n = (p^n) ^q.
+
+Lemma mult_gt_one: forall m n: nat, m > 1 -> n > 1 -> m*n > 1.
+Proof. intros. unfold mult. 
+induction m.
+  -exfalso. intuition.
+  - destruct IHm. 
+    + intuition.
+Admitted.
+Theorem cifraDecifra: forall m c e d p q n a b, p > 1 -> q > 1 -> e > 1 -> d > 1 -> a = e*d -> b = totiente n-> n = p*q -> 1 = e*d mod (totiente n) -> a >1-> c = encriptaNumero m n e -> m < n -> decriptaNumero c n d = m.
 Proof.
-intros. unfold decriptaNumero. rewrite -> H6. unfold encriptaNumero. rewrite -> pot_pot. rewrite -> aux2. rewrite <- H1. rewrite <- potencia_mult.  
-  - rewrite -> mod_dist.  rewrite <- H1 in H4. rewrite -> pow_n_1.  rewrite -> mult_comm. rewrite -> mod__. apply dividePred2 in H4. rewrite <- H2 in H4.
-  apply exists_multiple2 in H4. unfold divide in H4.
-  destruct H4 as [z]. rewrite H4.
+intros. unfold decriptaNumero. rewrite -> H8. unfold encriptaNumero. rewrite -> pot_pot. rewrite -> aux2. rewrite <- H3. rewrite <- potencia_mult.  
+  - rewrite -> mod_dist.  rewrite <- H3 in H6. rewrite -> pow_n_1.  rewrite -> mult_comm. rewrite -> mod__. apply dividePred2 in H6. rewrite <- H4 in H6.
+  apply exists_multiple2 in H6. unfold divide in H6.
+  destruct H6 as [z]. rewrite H6. rewrite -> mult_comm. rewrite <- pot_pot2.  rewrite -> pot_pot_3. rewrite -> Zpower_mod. rewrite -> H4. rewrite -> Euler_exp_totient. rewrite -> one_mod_m. rewrite one_mod_m. rewrite -> pow_1_l. rewrite -> one_mod_m. intuition. repeat (rewrite -> H5. apply mult_gt_one. apply H.). apply H0.  
+  -
      
