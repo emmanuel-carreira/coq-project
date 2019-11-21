@@ -62,7 +62,7 @@ Fixpoint filter_bool (l:list bool) (b: bool) : list bool :=
               | false => filter_bool t b
               end
   end.
-  
+
 Fixpoint verificaPrimo (n: nat) : bool :=
   match n with
   | O => false
@@ -71,7 +71,7 @@ Fixpoint verificaPrimo (n: nat) : bool :=
   end.
 
 Fixpoint totiente (n : nat)  : nat :=
-  length ( filter_bool (verificaListaCoPrimos n (criaListaNumericaSemZero (n - 1))) true). 
+  length(filter_bool(verificaListaCoPrimos n (criaListaNumericaSemZero (n - 1))) true).
 
 
 Fixpoint determinaE (n index : nat) : nat := 
@@ -92,15 +92,13 @@ Definition constroiChavePublica (n : nat) : nat*nat :=
 Definition divisao (n m q r : nat) : Prop := r < m /\ n = q * m + r.
 
 
-Definition encriptaNumero (m n e: nat): nat :=
-  (m ^ e) mod n.
+Definition encriptaNumero (m n e: nat): nat := (m ^ e) mod n.
 
 
-Definition decriptaNumero (c n d: nat): nat :=
-  (c ^ d) mod n.
+Definition decriptaNumero (c n d: nat): nat := (c ^ d) mod n.
 
 
-Definition divide x y := exists z, y=z*x.
+Definition divide x y := exists z, y = z * x.
 
 
 Notation "( x | y )" := (divide x y) (at level 0) : nat_scope.

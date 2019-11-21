@@ -29,10 +29,14 @@ Module Nat
 Teoremas e Lemmas necessários para construir a prova mas que fugiram um pouco
 do escopo do projeto
 *)
-Lemma totientePrimo : forall x : nat, verificaPrimo x = true -> totiente x = x -1.
+Lemma totientePrimo:
+  forall x : nat,
+  verificaPrimo x = true -> totiente x = x - 1.
 Proof. Admitted.
 
-Lemma totienteMult : forall x y: nat, totiente (x*y) = (totiente x) * (totiente y).
+Lemma totienteMult:
+  forall x y: nat,
+  totiente (x * y) = (totiente x) * (totiente y).
 Proof. Admitted.
 
 Lemma mod0eqdiv: forall x y: nat, y mod x = 0-> divide x y.
@@ -68,7 +72,9 @@ Proof. Admitted.
 Lemma pow_n_1: forall n: nat, n ^ 1 = n.
 Proof. Admitted.
 
-Lemma Euler_exp_totient: forall a n :nat , verificaCoPrimos a n = true -> a ^ totiente n  = 1 mod n.
+Lemma Euler_exp_totient: 
+  forall a n : nat,
+  verificaCoPrimos a n = true -> a ^ totiente n  = 1 mod n.
 Proof. Admitted.
 
 Theorem euclides: forall a b c m : nat, divide c (m * a) -> divide c (m * b)-> divide c (m * gcd a b).
@@ -195,7 +201,9 @@ Proof.
   - simpl. rewrite <- IHn'. intuition.
 Qed.
 
-Theorem  totienteN: forall p q : nat, verificaPrimo p = true /\ verificaPrimo q = true-> totiente (p*q) =  (p - 1)*(q - 1).
+Theorem  totienteN:
+  forall p q : nat, verificaPrimo p = true /\ verificaPrimo q = true ->
+  totiente (p*q) =  (p - 1)*(q - 1).
 Proof.
 intros. rewrite -> totienteMult. inversion H. apply totientePrimo in H0.
   apply totientePrimo in H1. rewrite -> H0. rewrite -> H1. reflexivity.
